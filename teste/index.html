@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+      border: 1px solid black;
+    }
+.larger-region {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.smaller-region {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: 1px solid black;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="larger-region">
+      <div id="slot1" onclick="copyImage(this)"></div>
+      <div id="slot2" onclick="copyImage(this)"></div>
+      <div id="slot3" onclick="copyImage(this)"></div>
+    </div>
+  </div>
+  <div class="smaller-region">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-2.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+    <img class="image" src="image-1.jpg" onclick="copyImageToSlot(this)">
+  </div>
+  <script>
+    function copyImageToSlot(image) {
+      var slots = document.getElementsByClassName("larger-region")[0].children;
+      var emptySlot = null;
+
+      for (var i = 0; i < slots.length; i++) {
+        if (slots[i].innerHTML === "") {
+          emptySlot = slots[i];
+          break;
+        }
+      }
+
+      if (emptySlot) {
+        var imageCopy = document.createElement("img");
+        imageCopy.setAttribute("src", image.getAttribute("src"));
+        imageCopy.setAttribute("class", "image");
+        imageCopy.setAttribute("onclick", "copyImageToSlot(this)");
+        emptySlot.appendChild(imageCopy);
+      }
+    }
+
+    function copyImage(slot) {
+      if (slot.innerHTML !== "") {
+        slot.innerHTML = "";
+      }
+    }
+
+    let espaços = document.querySelectorAll("#espacos div");
+let imagens = document.querySelectorAll("#imagens img");
+
+imagens.forEach((imagem) => {
+  imagem.addEventListener("click", () => {
+    for (let i = 0; i < espaços.length; i++) {
+      if (espaços[i].innerHTML === "") {
+        espaços[i].innerHTML = imagem.src;
+        break;
+      }
+    }
+  });
+});
+
+espaços.forEach((espaço) => {
+  espaço.addEventListener("click", () => {
+    if (espaços[0].innerHTML !== "" && espaços[1].innerHTML !== "" && espaços[2].innerHTML !== "") {
+      espaços[0].innerHTML = "";
+      espaços[1].innerHTML = "";
+      espaços[2].innerHTML = "";
+    }
+  });
+});
+  </script>
+</body>
+</html>
